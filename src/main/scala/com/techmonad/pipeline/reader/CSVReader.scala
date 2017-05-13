@@ -6,9 +6,9 @@ import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
 
-class Reader extends TryHelper {
+object CSVReader extends TryHelper {
 
-  def read(url: String, delimiter: Char)(implicit sc: SparkContext): RDD[Record] = {
+  def read(url: String, delimiter: Char = ',')(implicit sc: SparkContext): RDD[Record] = {
     val headers = sc.textFile(url).first()
     sc.textFile(url).mapPartitionsWithIndex {
       case (index, itr) =>

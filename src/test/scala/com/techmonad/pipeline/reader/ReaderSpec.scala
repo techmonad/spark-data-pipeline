@@ -7,7 +7,7 @@ import org.scalatest.{Matchers, WordSpec}
 
 class ReaderSpec extends WordSpec with Matchers with SparkSupport {
 
-  val reader = new Reader()
+  val reader = new CSVReader()
 
   "Reader " should {
     "read csv " in withSparkSession { implicit spark =>
