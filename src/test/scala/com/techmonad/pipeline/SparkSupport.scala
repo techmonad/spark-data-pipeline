@@ -20,6 +20,7 @@ trait SparkSupport {
       spec(spark)
     } catch {
       case NonFatal(th) =>
+
         spark.stop()
         throw th
 
