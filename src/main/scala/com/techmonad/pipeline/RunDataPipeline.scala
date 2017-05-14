@@ -17,7 +17,6 @@ object RunDataPipeline extends App with SparkContextProvider {
     .validate
     .transform
     .validateSchema
-    .save
-
+    .saveToEs
 
 }

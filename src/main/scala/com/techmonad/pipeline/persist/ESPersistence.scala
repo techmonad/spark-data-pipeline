@@ -8,7 +8,7 @@ import org.elasticsearch.spark._
 object ESPersistence {
 
   implicit class ESPersistence(val self: RDD[Record]) extends AnyVal {
-    def save(): Unit = {
+    def saveToEs(): Unit = {
       val validRecords = self.filter(_.status != Status.ERROR)
       if (!validRecords.isEmpty())
         validRecords.saveToEs("data_index/twitter")
