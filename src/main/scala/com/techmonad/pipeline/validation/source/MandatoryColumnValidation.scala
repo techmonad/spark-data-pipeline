@@ -4,7 +4,7 @@ import com.techmonad.pipeline.Record
 import com.techmonad.pipeline.util.Status
 import com.techmonad.pipeline.validation.Validation
 
-class MandatoryColumnValidation extends Validation {
+object MandatoryColumnValidation extends Validation {
 
   override def validate(record: Record): Record =
     record.data.get("text") match {

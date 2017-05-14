@@ -13,11 +13,11 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations
 import scala.collection.convert.wrapAll._
 
 
-class SentimentAnalyzer extends Transformation {
+object SentimentAnalyzer extends Transformation {
 
   override def transform(record: Record): Record =
     if (record.status != Status.ERROR) {
-      val sentiment: String = SentimentAnalyzer.getSentiment(record.data("text").toString)
+      val sentiment: String = NLPSentimentAnalyzer.getSentiment(record.data("text").toString)
       record.copy(data = record.data + ("sentiment" -> sentiment))
     } else {
       record
@@ -26,7 +26,7 @@ class SentimentAnalyzer extends Transformation {
 
 }
 
-object SentimentAnalyzer {
+object NLPSentimentAnalyzer {
 
   private val props = new Properties()
   props.setProperty("annotators", "tokenize, ssplit, parse, sentiment")
