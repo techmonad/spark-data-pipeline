@@ -7,7 +7,7 @@ trait TryHelper {
 
   def withTry[T](t: => T): Option[T] =
     try
-      Some(t)
+      Option(t)
     catch {
       case NonFatal(th) =>
         th.printStackTrace()

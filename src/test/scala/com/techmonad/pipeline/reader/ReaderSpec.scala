@@ -1,20 +1,20 @@
 package com.techmonad.pipeline.reader
 
-import com.techmonad.pipeline.SparkSupport
-import org.apache.spark.sql.Row
+import com.techmonad.pipeline.util.Status
+import com.techmonad.pipeline.{Record, SparkSupport}
 import org.scalatest.{Matchers, WordSpec}
 
 
 class ReaderSpec extends WordSpec with Matchers with SparkSupport {
 
-  val reader = new CSVReader()
 
   "Reader " should {
-    "read csv " in withSparkSession { implicit spark =>
-      val csvData: Array[Row] = reader.readCSV("""src/test/resources/csv/emp.csv""", ',').collect()
-      csvData.length shouldBe 3
-      csvData(0).get(0).toString.toInt shouldBe 1
-      csvData(0).get(1).toString shouldBe "jon"
+    "read csv " in withSparkContext { implicit spark =>
+      val csvData: Array[Record] = CSVReader.read("""src/test/resources/csv/tweet.csv""", ',').collect()
+      csvData.length shouldBe 832
+      csvData.filter(_.status != Status.ERROR).length shouldBe 832
+      csvData.filter(_.status == Status.OK).foreach(println)
+
 
     }
 

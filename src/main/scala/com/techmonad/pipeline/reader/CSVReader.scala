@@ -25,9 +25,12 @@ object CSVReader extends TryHelper {
     val headers = parser.parse(firstLine)
     itr.map { line =>
       withTry(parser.parse(line)) match {
-        case Some(row) if row.length == headers.length =>
-          Record(headers.zip(row).toMap)
-        case _ =>
+        case Some(row) =>
+          if (row.length == headers.length)
+            Record(headers.zip(row).toMap)
+          else
+            Record(Map("record" -> line), Status.ERROR, Some(s"Headers mismatch, actual length is [${headers.length}] but found: {${row.length}]"))
+        case None =>
           Record(Map("record" -> line), Status.ERROR, Some("Invalid record"))
       }
     }

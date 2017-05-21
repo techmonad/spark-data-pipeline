@@ -7,10 +7,7 @@ import org.apache.spark.rdd.RDD
 
 class DataPipeline(dataDir: String) {
 
-
-  def read(implicit sc: SparkContext): RDD[Record] = {
-    CSVReader.read(dataDir)
-  }
+  def read(implicit sc: SparkContext): RDD[Record] = CSVReader.read(dataDir)
 
 }
 

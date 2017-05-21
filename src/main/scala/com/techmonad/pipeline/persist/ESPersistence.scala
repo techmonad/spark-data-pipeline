@@ -8,11 +8,11 @@ import org.elasticsearch.spark._
 object ESPersistence {
 
   implicit class ESPersistence(val self: RDD[Record]) extends AnyVal {
-    def saveToEs(): Unit = {
-      val validRecords = self.filter(_.status != Status.ERROR)
+    def saveToES(): Unit = {
+      val validRecords = self.collect { case record if (record.status != Status.ERROR) => record.data }
       if (!validRecords.isEmpty())
         validRecords.saveToEs("data_index/twitter")
-      val invalidRecords = self.filter(_.status == Status.ERROR)
+      val invalidRecords = self.collect { case record if (record.status == Status.ERROR) => record.data + ("reason" -> record.reason.getOrElse("")) }
       if (!invalidRecords.isEmpty())
         invalidRecords.saveToEs("invalid_data_index/twitter")
     }
