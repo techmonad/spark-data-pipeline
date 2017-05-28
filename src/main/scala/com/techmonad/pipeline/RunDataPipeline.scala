@@ -10,7 +10,7 @@ object RunDataPipeline extends App with SparkContextProvider {
   import schema.SchemaValidator._
   import source.SourceValidator._
 
-  val dataDir = "/home/satendra/open-source/spark-data-pipeline/src/test/resources/csv/tweet.csv"//args(0)
+  val dataDir = "src/test/resources/csv/tweet.csv"//args(0)
 
   DataPipeline(dataDir)
     .read

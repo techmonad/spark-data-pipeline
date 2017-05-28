@@ -9,10 +9,8 @@ object SourceValidator {
   implicit class SourceValidator(val self: RDD[Record]) extends AnyVal {
 
     def validate(): RDD[Record] = {
-      self.mapPartitions { records =>
-        records.map {
-          MandatoryColumnValidation.validate
-        }
+      self mapPartitions { records =>
+        records map MandatoryColumnValidation.validate
       }
     }
   }

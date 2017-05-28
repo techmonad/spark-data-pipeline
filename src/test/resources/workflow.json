@@ -1,0 +1,17 @@
+{
+  "source":{"dir":"s3://data/tweet", "schema":"mentioned below>> "},
+  "validation":["COLUMN_VALIDATION", "FIELD_VALIDATION"],
+  "transformation":["SENTIMENT_ANALYSIS"],
+  "schemaValidation":["DATA_MODEL_VALIDATION"],
+  "saveTo":{"storage":"ES","info":{"index":"data_index", "type":"twitter","anomaly_index":"anomaly_data_index"}},
+  "postProcessing":["SEND_EMAIL_NOTIFICATION"]
+},
+## Schema example
+{"schema":{"fields":[{"name":"id","dataType":"StringType","nullable":false},
+{"name":"date","dataType":"DateType","nullable":false},
+{"name":"text","dataType":"StringType","nullable":false},
+{"name":"author_name","dataType":"StringType","nullable":false},
+{"name":"retweets","dataType":"IntType","nullable":false},
+{"name":"likes","dataType":"IntType","nullable":false}
+]
+}
