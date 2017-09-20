@@ -5,5 +5,7 @@ import com.techmonad.pipeline.Record
 
 trait Transformation {
 
+  val name:String
+
   def transform(record: Record): Record
 }

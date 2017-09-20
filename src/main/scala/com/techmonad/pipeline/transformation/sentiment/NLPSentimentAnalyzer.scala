@@ -23,7 +23,7 @@ object SentimentAnalyzer extends Transformation {
       record
     }
 
-
+  override val name = "SENTIMENT_ANALYSIS"
 }
 
 object NLPSentimentAnalyzer {
