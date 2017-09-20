@@ -10,8 +10,7 @@ object RunDataPipeline extends App with SparkContextProvider with JsonHelper {
     if (args.length < 1)
       throw new IllegalArgumentException("Data directory and workflow json are required")
     else
-      (args(0))
-
+      args(0)
 
   val workFlow = parse(workFlowJson).extract[WorkFlow]
 

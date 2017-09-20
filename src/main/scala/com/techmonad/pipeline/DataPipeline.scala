@@ -8,6 +8,8 @@ import com.techmonad.pipeline.workflow.{Sink, Source, WorkFlow}
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
+import scala.util.{Failure, Success, Try}
+
 trait DataPipeline {
 
   def run(): Unit
@@ -17,13 +19,20 @@ trait DataPipeline {
 object DataPipeline {
 
   def apply(workFlow: WorkFlow)(implicit sc: SparkContext): DataPipeline = {
-    val sourceRDD = applySource(workFlow.source)
-    val validatedRDD = applyValidation(sourceRDD, workFlow.validations)
-    val transformedRDD = applyTransformation(validatedRDD, workFlow.transformations)
-    val schemaValidatedRDD = applySchemaValidation(transformedRDD, workFlow.schemaValidation)
-    new DataPipeline {
-      override def run(): Unit =
-        applySink(schemaValidatedRDD, workFlow.sink).run()
+    Try {
+      val sourceRDD = applySource(workFlow.source)
+      val validatedRDD = applyValidation(sourceRDD, workFlow.validations)
+      val transformedRDD = applyTransformation(validatedRDD, workFlow.transformations)
+      val schemaValidatedRDD = applySchemaValidation(transformedRDD, workFlow.schemaValidation)
+      applySink(schemaValidatedRDD, workFlow.sink)
+    } match {
+      case Success(sink) =>
+        new DataPipeline {
+          override def run(): Unit = sink.run()
+        }
+      case Failure(th) =>
+        println("Error: Invalid workflow " + workFlow) //TODO: use logger
+        throw th
     }
   }
 
@@ -54,10 +63,9 @@ object DataPipeline {
     applyValidation(rdd, validations)
   }
 
-  private def applySink(rdd: RDD[Record], sink: Sink) = {
+  private def applySink(rdd: RDD[Record], sink: Sink) =
     sink.`type` match {
       case "ES" => new ESPersistenceRDD(rdd)
     }
-
-  }
+  
 }
