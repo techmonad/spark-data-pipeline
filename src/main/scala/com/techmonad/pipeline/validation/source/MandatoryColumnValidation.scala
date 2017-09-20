@@ -6,6 +6,9 @@ import com.techmonad.pipeline.validation.Validation
 
 object MandatoryColumnValidation extends Validation {
 
+
+  override def name: String = "COLUMN_VALIDATION"
+
   override def validate(record: Record): Record =
     record.data.get("text") match {
       case Some(text: String) if (text.trim.nonEmpty) =>

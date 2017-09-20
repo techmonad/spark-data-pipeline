@@ -20,5 +20,5 @@ object SchemaValidation extends Validation {
       record
     }
 
-
+  override def name = "SCHEMA_VALIDATION"
 }

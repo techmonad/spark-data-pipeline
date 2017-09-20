@@ -8,4 +8,5 @@ trait SparkContextProvider {
   val conf = new SparkConf().setMaster("local[*]").setAppName("DataPipeline")
   implicit val sc = new SparkContext(conf)
 
+
 }

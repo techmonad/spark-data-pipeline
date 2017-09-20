@@ -1,12 +1,38 @@
 {
-  "source":{"dir":"s3://data/tweet", "schema":"mentioned below>> "},
-  "validation":["COLUMN_VALIDATION", "FIELD_VALIDATION"],
-  "transformation":["SENTIMENT_ANALYSIS"],
-  "schemaValidation":["DATA_MODEL_VALIDATION"],
-  "saveTo":{"storage":"ES","info":{"index":"data_index", "type":"twitter","anomaly_index":"anomaly_data_index"}},
-  "postProcessing":["SEND_EMAIL_NOTIFICATION"]
-},
-## Schema example
+  "source": {
+    "source_type": "CSV",
+    "dir": "s3://data/tweet",
+    "meta_info": {
+      "schema": "mentioned below>>",
+      "text_field": "text",
+      "date_field": "date",
+      "author_field": "author_name"
+    }
+  },
+  "validation": [
+    "COLUMN_VALIDATION",
+    "FIELD_VALIDATION"
+  ],
+  "transformation": [
+    "SENTIMENT_ANALYSIS"
+  ],
+  "schemaValidation": [
+    "DATA_MODEL_VALIDATION"
+  ],
+  "saveTo": {
+    "storage": "ES",
+    "meta_info": {
+      "index": "data_index",
+      "type": "twitter",
+      "anomaly_data_index": "anomaly_data_index"
+    }
+  },
+  "postProcessing": [
+    "SEND_EMAIL_NOTIFICATION"
+  ]
+}
+
+/*
 {"schema":{"fields":[{"name":"id","dataType":"StringType","nullable":false},
 {"name":"date","dataType":"DateType","nullable":false},
 {"name":"text","dataType":"StringType","nullable":false},
@@ -14,4 +40,4 @@
 {"name":"retweets","dataType":"IntType","nullable":false},
 {"name":"likes","dataType":"IntType","nullable":false}
 ]
-}
+}*/
