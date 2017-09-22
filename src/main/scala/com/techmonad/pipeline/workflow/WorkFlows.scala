@@ -4,11 +4,11 @@ case class WorkFlow(
                      source: Source,
                      validations: List[String],
                      transformations: List[String],
-                     schemaValidation: List[String],
+                     schemaValidations: List[String],
                      sink: Sink
                    )
 
-case class Source(`type`: String, dir: String, meta: Map[String, String])
+case class Source(`type`: String, path: String, meta: Map[String, String])
 
 case class Sink(`type`: String, meta: Map[String, String])
 
@@ -18,7 +18,7 @@ case class Sink(`type`: String, meta: Map[String, String])
 |{
  |  "source": {
  |    "type": "CSV",
- |    "dir": "s3://data/bucket_name",
+ |    "path": "/home/satendra/decooda/testing-csv",
  |    "meta":{"text_field":"text","date_field": "date","author_field":"author_name" }
  |  },
  |
@@ -29,7 +29,7 @@ case class Sink(`type`: String, meta: Map[String, String])
  |  "schemaValidation": [    "DATA_MODEL_VALIDATION"  ],
  |
  |  "sink": {
- |    "storage_type": "ES",
+ |    "type": "ES",
  |    "meta":{ "index": "data_index","type": "twitter"    }
  |  }
  |}

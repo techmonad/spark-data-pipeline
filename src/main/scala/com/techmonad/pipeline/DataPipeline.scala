@@ -23,7 +23,7 @@ object DataPipeline {
       val sourceRDD = applySource(workFlow.source)
       val validatedRDD = applyValidation(sourceRDD, workFlow.validations)
       val transformedRDD = applyTransformation(validatedRDD, workFlow.transformations)
-      val schemaValidatedRDD = applySchemaValidation(transformedRDD, workFlow.schemaValidation)
+      val schemaValidatedRDD = applySchemaValidation(transformedRDD, workFlow.schemaValidations)
       applySink(schemaValidatedRDD, workFlow.sink)
     } match {
       case Success(sink) =>
@@ -37,7 +37,7 @@ object DataPipeline {
   }
 
   private def applySource(source: Source)(implicit sc: SparkContext) = {
-    CSVReader.read(source.dir)
+    CSVReader.read(source.path)
   }
 
   private def applyValidation(rdd: RDD[Record], validations: List[String]): RDD[Record] =
@@ -67,5 +67,5 @@ object DataPipeline {
     sink.`type` match {
       case "ES" => new ESPersistenceRDD(rdd)
     }
-  
+
 }

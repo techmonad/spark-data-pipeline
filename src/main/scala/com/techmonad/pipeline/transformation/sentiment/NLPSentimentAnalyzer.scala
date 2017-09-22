@@ -13,11 +13,12 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations
 import scala.collection.convert.wrapAll._
 
 
-object SentimentAnalyzer extends Transformation {
+object SentimentAnalyzer extends Transformation  with Serializable{
 
   override def transform(record: Record): Record =
     if (record.status != Status.ERROR) {
       val sentiment: String = NLPSentimentAnalyzer.getSentiment(record.data("text").toString)
+     println("Analyzing Sentiment........... " + sentiment)
       record.copy(data = record.data + ("sentiment" -> sentiment))
     } else {
       record

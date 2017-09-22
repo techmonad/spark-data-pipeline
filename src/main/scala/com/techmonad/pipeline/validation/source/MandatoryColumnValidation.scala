@@ -4,7 +4,7 @@ import com.techmonad.pipeline.Record
 import com.techmonad.pipeline.util.Status
 import com.techmonad.pipeline.validation.Validation
 
-object MandatoryColumnValidation extends Validation {
+object MandatoryColumnValidation extends Validation with Serializable{
 
 
   override def name: String = "COLUMN_VALIDATION"
@@ -12,7 +12,7 @@ object MandatoryColumnValidation extends Validation {
   override def validate(record: Record): Record =
     record.data.get("text") match {
       case Some(text: String) if (text.trim.nonEmpty) =>
-        record.data.get("date") match {
+       record.data.get("date") match {
           case Some(date: String) if (date.trim.nonEmpty) =>
             record
           case None =>
