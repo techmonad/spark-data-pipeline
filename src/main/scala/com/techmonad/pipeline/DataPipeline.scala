@@ -36,7 +36,7 @@ object DataPipeline {
     }
   }
 
-  private def applySource(source: Source)(implicit sc: SparkContext) = {
+  private def applySource(source: Source)(implicit sc: SparkContext): RDD[Record] = {
     CSVReader.read(source.path)
   }
 
@@ -54,16 +54,14 @@ object DataPipeline {
     transformations match {
       case Nil => rdd
       case head :: tail =>
-        applyTransformation(
-          Transformations.get(head).map { v => rdd.map(v.transform) }.getOrElse(rdd)
-          , tail)
+        applyTransformation(Transformations.get(head).map { v => rdd.map(v.transform) }.getOrElse(rdd), tail)
     }
 
-  private def applySchemaValidation(rdd: RDD[Record], validations: List[String]) = {
+  private def applySchemaValidation(rdd: RDD[Record], validations: List[String]): RDD[Record] = {
     applyValidation(rdd, validations)
   }
 
-  private def applySink(rdd: RDD[Record], sink: Sink) =
+  private def applySink(rdd: RDD[Record], sink: Sink): ESPersistenceRDD =
     sink.`type` match {
       case "ES" => new ESPersistenceRDD(rdd)
     }
