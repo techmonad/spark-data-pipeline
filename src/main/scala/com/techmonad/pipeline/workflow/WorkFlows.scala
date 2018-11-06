@@ -18,7 +18,7 @@ case class Sink(`type`: String, meta: Map[String, String])
 |{
  |  "source": {
  |    "type": "CSV",
- |    "path": "/home/satendra/decooda/testing-csv",
+ |    "path": "/home/satendra/data/testing-csv",
  |    "meta":{"text_field":"text","date_field": "date","author_field":"author_name" }
  |  },
  |
