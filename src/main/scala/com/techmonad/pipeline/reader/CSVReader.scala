@@ -10,13 +10,14 @@ object CSVReader extends TryHelper {
 
   def read(url: String, delimiter: Char = ',')(implicit sc: SparkContext): RDD[Record] = {
     val headers = sc.textFile(url).first()
-    sc.textFile(url).mapPartitionsWithIndex {
-      case (index, itr) =>
-        if (index == 0)
-          readFile(itr.drop(1), headers)
-        else
-          readFile(itr, headers)
-    }
+    sc.textFile(url)
+      .mapPartitionsWithIndex {
+        case (index, itr) =>
+          if (index == 0)
+            readFile(itr.drop(1), headers)
+          else
+            readFile(itr, headers)
+      }
   }
 
 
