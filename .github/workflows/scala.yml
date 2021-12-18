@@ -1,0 +1,37 @@
+name: Scala CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Run tests
+      run: sbt clean compile test
+      
+  merge:
+    name: Merge dependency update
+    if: github.actor == 'anand-singh'
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+    - name: merge PR
+      uses: desbo/merge-pr-action@v0
+      with:
+        GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
+        ALLOWED_UPDATE: major
+        MERGE_METHOD: squash
+  
