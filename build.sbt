@@ -2,7 +2,7 @@ name := "spark-data-pipeline"
 
 version := "1.0"
 
-scalaVersion := "2.11.12"
+scalaVersion := "2.13.7"
 
 
 libraryDependencies ++= Seq(
