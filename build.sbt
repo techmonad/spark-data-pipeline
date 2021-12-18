@@ -11,6 +11,6 @@ libraryDependencies ++= Seq(
   "org.elasticsearch" %% "elasticsearch-spark-20" % "6.6.0",
   "edu.stanford.nlp" % "stanford-corenlp" % "3.6.0" artifacts(Artifact("stanford-corenlp", "models"), Artifact("stanford-corenlp")),
   "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "org.json4s" %% "json4s-native" % "3.5.4",
+  "org.json4s" %% "json4s-native" % "3.5.5",
   "org.scalatest" %% "scalatest" % "3.0.1"
 )
